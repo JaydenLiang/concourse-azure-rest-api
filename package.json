@@ -1,6 +1,6 @@
 {
   "name": "concourse-resource-type-azure-rest-api",
-  "version": "1.0.0",
+  "version": "1.0.0-dev.0",
   "description": "Concourse resource type for calling Azure REST API with an application service principal.",
   "main": "dist/index.js",
   "types": "dist/types",

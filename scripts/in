@@ -1,0 +1,3 @@
+#!/usr/bin/env node
+var concourseResource = require('../dist/bin/index');
+concourseResource.execIn();

@@ -6,6 +6,7 @@
   "types": "dist/types",
   "scripts": {
     "audit-production": "npm audit --production",
+    "build": "npm run compile",
     "bundle": "shx rm -rf dist/bin && ncc build out/index.js -so dist/bin",
     "compile": "shx rm -rf out && shx rm -rf dist/types && tsc",
     "lint-check": "node node_modules/ftnt-devops-ci/bin/ftnt-devops-ci.js c -fl  -F .eslintignore -L .eslintignore \"{*,**/*}{.js,.json,.ts}\"",
@@ -26,6 +27,7 @@
   },
   "homepage": "https://github.com/JaydenLiang/concourse-resource-type-azure-rest-api#readme",
   "dependencies": {
+    "@azure/ms-rest-nodeauth": "^3.0.9",
     "@types/node": "^14.14.35",
     "axios": "^0.21.1",
     "http-status-codes": "^2.1.4"
@@ -35,7 +37,7 @@
     "eslint": "^7.22.0",
     "eslint-config-prettier": "^8.1.0",
     "eslint-plugin-prettier": "^3.3.1",
-    "ftnt-devops-ci": "github:fortinet/ftnt-devops-ci",
+    "ftnt-devops-ci": "https://github.com/fortinet/ftnt-devops-ci.git",
     "husky": "^4.3.0",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.2.1",

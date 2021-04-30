@@ -1,7 +1,23 @@
-import { JSONable } from './lib';
+import { URL } from 'url';
+import { get, getClientSecretCredential, JSONable } from './lib';
 
-export function execCheck(): Promise<JSONable> {
-    // TODO: add implementation for the check script
+export async function execCheck(
+    tenentId: string,
+    clientId: string,
+    clientSecret: string,
+    url: string
+): Promise<JSONable> {
+    try {
+        const credential = await getClientSecretCredential(
+            tenentId,
+            clientId,
+            clientSecret
+        );
+        const result = await get(credential, new URL(url));
+        console.log(result);
+    } catch (error) {
+        console.error(error);
+    }
     return null;
 }
 

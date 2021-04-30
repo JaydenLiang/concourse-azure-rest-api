@@ -75,7 +75,10 @@ jobs:
       # prepare release assets
       - name: make dist
         if: ${{ github.event.inputs['no-publish'] != 'true'  }}
-        run: npm run make-dist
+        run: |
+          npm run make-dist
+          rm -rf node_modules
+          npm pack
       # create a release
       - id: create-release
         name: create release
@@ -97,6 +100,6 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           tag: ${{ steps['create-branch'].outputs['head-version'] }} # Use the output from the `create-branch` step
           prerelease: ${{ steps['create-branch'].outputs['is-prerelease'] == 'true' }} # Use the output from the `create-branch` step
-          file: ./fortigate-autoscale-azure*.zip
+          file: ./concourse-resource-type-azure-rest-api*.tgz
           file_glob: true
           overwrite: true

@@ -45,7 +45,7 @@ export async function execCheck(): Promise<void> {
         // TODO: remove the comments when the project is complete. Keep them for future debugging.
         // log('argv: ', JSON.stringify(argv, null, 4));
         log('stdin: ', JSON.stringify(input, null, 4));
-        // log('source: ', JSON.stringify(source));
+        log('source: ', JSON.stringify(source));
         // log(
         //     'version: ',
         //     JSON.stringify({ req_time: String(Math.ceil(Date.now() / 1000)) })

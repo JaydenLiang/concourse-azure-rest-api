@@ -28,8 +28,10 @@
   "homepage": "https://github.com/JaydenLiang/concourse-resource-type-azure-rest-api#readme",
   "dependencies": {
     "@azure/ms-rest-nodeauth": "^3.0.9",
+    "@types/chalk": "^2.2.0",
     "@types/node": "^14.14.35",
     "axios": "^0.21.1",
+    "chalk": "^4.1.1",
     "http-status-codes": "^2.1.4"
   },
   "devDependencies": {

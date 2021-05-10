@@ -65,8 +65,8 @@ export function fakeVersions(): Version[] {
     const hours = now.getHours() - startDate.getHours();
     const minutes = now.getMinutes() - startDate.getMinutes();
     const versions: Version[] = [];
-    for (let h = 0; h < hours; h++) {
-        for (let m = 0; m < minutes / 2; m++) {
+    for (let h = 0; h <= hours; h++) {
+        for (let m = 0; m <= minutes / 2; m++) {
             const v = `${h}.${m}`;
             versions.push({
                 hash: createHash(v),

@@ -211,6 +211,13 @@ jobs:
           url: 'https://management.azure.com/subscriptions/{subscription}/providers/Microsoft.Compute/locations/{location}/publishers/{publisher}/artifacttypes/vmimage/offers/{offer}/skus/{sku}/versions?api-version=2020-12-01'
 ```
 
+## Output
+
+The content of the Azure REST API result will be stored in the file with the name: ***rest-api*** in the destination directory as command line argument $1 given to the ```in``` script.
+
+For example, if the destination directory in $1 is ```/tmp/build/get/```, the file that contains the conent of the result will be: ```/tmp/build/get/rest-api```.
+
+More detail information about the destination directory can be found in this [Concourse CI](https://concourse-ci.org/implementing-resource-types.html) documentation page.
 ## Issues
 
 please report issue to the [Issues](https://github.com/JaydenLiang/concourse-resource-type-azure-rest-api/issues) page.

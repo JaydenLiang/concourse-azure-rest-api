@@ -1,19 +1,13 @@
 /* eslint-disable @typescript-eslint/camelcase */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { URL } from 'url';
 import {
-    createHash,
     err,
-    get,
-    getClientSecretCredential,
+    fakeVersions,
     inputFetchAll,
     log,
-    mask,
-    mergeLocalParams,
     out,
     Params,
     put,
-    sub,
     Version,
 } from './lib';
 
@@ -56,23 +50,35 @@ export async function execCheck(): Promise<void> {
         //     'version: ',
         //     JSON.stringify({ req_time: String(Math.ceil(Date.now() / 1000)) })
         // );
-        const params: Params = mergeLocalParams(source);
-        const subURL = sub(params.url, params);
+        // const params: Params = mergeLocalParams(source);
+        // const subURL = sub(params.url, params);
         // log(`url substitute: ${subURL}`);
-        const credential = await getClientSecretCredential(
-            params.tenant,
-            params.client_id,
-            params.client_secret
-        );
-        const result = await get(credential, new URL(subURL));
+        // const credential = await getClientSecretCredential(
+        //     params.tenant,
+        //     params.client_id,
+        //     params.client_secret
+        // );
+        // const result = await get(credential, new URL(subURL));
         // log(result);
-        const hash = createHash(JSON.stringify(result));
-        const count = (Array.isArray(result) && result.length) || 1;
-        const version: Version = {
-            hash: hash,
-            count: String(count),
-        };
-        out([version]);
+        // let versions: Version[] = [];
+        // if (Array.isArray(result)) {
+        //     versions = result.map((data) => {
+        //         const version: Version = {
+        //             hash: createHash(JSON.stringify(data)),
+        //             content: JSON.stringify(data),
+        //         };
+        //         return version;
+        //     });
+        // } else {
+        //     versions.push({
+        //         hash: createHash(JSON.stringify(result)),
+        //         content: JSON.stringify(result),
+        //     });
+        // }
+        // out([versions]);
+
+        // NOTE: fake versions for testing
+        out(fakeVersions());
     } catch (error) {
         err(JSON.stringify(error));
     }
@@ -120,52 +126,60 @@ export async function execIn(argv: string[]): Promise<void> {
         // TODO: remove the comments when the project is complete. Keep them for future debugging.
         // log('argv: ', JSON.stringify(argv, null, 4));
         log('stdin: ', JSON.stringify(input, null, 4));
-        // log('source: ', JSON.stringify(source));
-        // log('version: ', JSON.stringify(version));
+        log('source: ', JSON.stringify(source));
+        log('version: ', JSON.stringify(version));
 
-        const params: Params = mergeLocalParams(source);
-        const subURL = sub(params.url, params);
-        log(`url substitute: ${subURL}`);
-        const credential = await getClientSecretCredential(
-            params.tenant,
-            params.client_id,
-            params.client_secret
-        );
-        const result = await get(credential, new URL(subURL));
-        put(argv[2], 'rest-api', result);
-        // meta data
-        const metadata: { name: string; value: string }[] = Object.entries(
-            params
-        ).map(([k, v]) => {
-            if (
-                [
-                    'client_id',
-                    'client_secret',
-                    'tenant',
-                    'subscription',
-                ].includes(k)
-            ) {
-                return {
-                    name: k,
-                    value: mask(v),
-                };
-            } else {
-                return {
-                    name: k,
-                    value: v,
-                };
-            }
-        });
-        out({
-            version: version,
-            metadata: [
-                {
-                    name: 'url:substitute',
-                    value: subURL,
-                },
-                ...metadata,
-            ],
-        });
+        // const params: Params = mergeLocalParams(source);
+        // const subURL = sub(params.url, params);
+        // log(`url substitute: ${subURL}`);
+        // const credential = await getClientSecretCredential(
+        //     params.tenant,
+        //     params.client_id,
+        //     params.client_secret
+        // );
+        // const result = await get(credential, new URL(subURL));
+        // put(argv[2], 'rest-api', result);
+        // // meta data
+        // const metadata: { name: string; value: string }[] = Object.entries(
+        //     params
+        // ).map(([k, v]) => {
+        //     if (
+        //         [
+        //             'client_id',
+        //             'client_secret',
+        //             'tenant',
+        //             'subscription',
+        //         ].includes(k)
+        //     ) {
+        //         return {
+        //             name: k,
+        //             value: mask(v),
+        //         };
+        //     } else {
+        //         return {
+        //             name: k,
+        //             value: v,
+        //         };
+        //     }
+        // });
+        // out({
+        //     version: version,
+        //     metadata: [
+        //         {
+        //             name: 'url:substitute',
+        //             value: subURL,
+        //         },
+        //         ...metadata,
+        //     ],
+        // });
+
+        // NOTE: fake output
+        const currentVersions = fakeVersions();
+        const i = currentVersions.indexOf(version);
+        const newVersions =
+            i > 0 ? currentVersions.slice(0, i) : currentVersions[0];
+        put(argv[2], 'rest-api', newVersions);
+        out(newVersions);
     } catch (error) {
         err(JSON.stringify(error));
     }

@@ -59,20 +59,18 @@ export function createHash(str: string): string {
 
 export function fakeVersions(): Version[] {
     const startDate = new Date(
-        'Mon May 10 2021 14:00:00 GMT-0700 (Pacific Daylight Time)'
+        'Mon May 10 2021 20:00:00 GMT-0700 (Pacific Daylight Time)'
     );
     const now = new Date();
-    const hours = now.getHours() - startDate.getHours();
-    const minutes = now.getMinutes() - startDate.getMinutes();
+    const timeDiff = now.getTime() - startDate.getTime();
+    const minutes = Math.floor(timeDiff / 60000);
     const versions: Version[] = [];
-    for (let h = 0; h <= hours; h++) {
-        for (let m = 0; m <= minutes / 2; m++) {
-            const v = `${h}.${m}`;
-            versions.push({
-                hash: createHash(v),
-                content: v,
-            });
-        }
+    for (let m = 0; m <= minutes / 2; m++) {
+        const v = `${Math.floor(m / 60)}.${m}`;
+        versions.push({
+            hash: createHash(v),
+            content: v,
+        });
     }
     return versions;
 }

@@ -141,7 +141,7 @@ export function loadLocalParams(filePath: string): Params {
 }
 
 export function mergeLocalParams(source: Params): Params {
-    let params: Params;
+    let params: Params = { url: null };
     // check if from_local_path parameter is present. then load content from the local file
     if (source.from_local_path) {
         log(`detected source.from_local_path: ${source.from_local_path}`);
